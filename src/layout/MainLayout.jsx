@@ -12,7 +12,7 @@ function MainLayout({ children }) {
   return (
     <Layout>
       {/* header section */}
-      <Header className='flex flex-row items-center justify-between !bg-neutral-600'>
+      <Header className='flex flex-row items-center justify-between !bg-stone-600'>
         <Link to='/'>
           <Title className='!text-white mt-2' level={2}>Minesweeper</Title>
         </Link>
@@ -24,7 +24,7 @@ function MainLayout({ children }) {
       </Content>
 
       {/* footer section */}
-      <Footer className='flex flex-col items-center justify-between !bg-neutral-600 md:flex-row'>
+      <Footer className='flex flex-col items-center justify-between !bg-stone-600 md:flex-row'>
         <Text className='text-white text-sm'>
           &copy; 2022
           {' '}

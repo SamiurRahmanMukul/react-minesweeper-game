@@ -14,7 +14,7 @@ function App() {
         <Route path='*' element={<NotFound />} />
 
         {/* GAME PANEL ROUTE */}
-        <Route path='/start/:stage' element={<GamePanel />} />
+        <Route path='/start/:level' element={<GamePanel />} />
       </Routes>
     </BrowserRouter>
   );
