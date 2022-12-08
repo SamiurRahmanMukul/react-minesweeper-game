@@ -1,92 +1,46 @@
-import {
-  FacebookOutlined, GithubOutlined, InstagramOutlined, LinkedinOutlined, TwitterOutlined
-} from '@ant-design/icons';
-import { Button, Layout, Typography } from 'antd';
+import { Card } from 'antd';
 import React from 'react';
 import { Link } from 'react-router-dom';
+import MainLayout from '../layout/MainLayout';
 
-const { Header, Content, Footer } = Layout;
-const { Title, Text } = Typography;
+const { Meta } = Card;
 
 function Home() {
   return (
-    <Layout>
-      {/* header section */}
-      <Header className='flex flex-row items-center justify-between !bg-neutral-600'>
-        <Link to='/'>
-          <Title className='!text-white mt-2' level={2}>Minesweeper</Title>
-        </Link>
-      </Header>
-
-      {/* main content section */}
-      <Content className='!min-h-[81.8vh]' />
-
-      {/* footer section */}
-      <Footer className='flex flex-col items-center justify-between !bg-neutral-600 md:flex-row'>
-        <Text className='text-white text-sm'>
-          &copy; 2022
-          {' '}
-          <Button
-            className='mx-0 px-0'
-            href='http://www.samiurrahmanmukul.epizy.com'
-            target='_blank'
-            type='link'
+    <MainLayout>
+      <div className='py-10 flex flex-col items-center justify-center space-x-0 lg:flex-row lg:items-start lg:space-x-10'>
+        <Link to='/start/beginner'>
+          <Card
+            hoverable
+            style={{ width: 170, height: 280 }}
+            cover={<img alt='example' src='https://minesweeper.online/img/homepage/beginner.png' />}
           >
-            Samiur Rahman Mukul.
-          </Button>
-          {' '}
-          All rights reserved.
-        </Text>
+            <Meta title='Beginner' />
+          </Card>
+        </Link>
 
-        <div className='space-x-4'>
-          <Button
-            className='text-black'
-            icon={<FacebookOutlined />}
-            href='https://www.facebook.com/SamiurRahmanMukul'
-            target='_blank'
-            shape='circle'
-            type='dashed'
-            size='middle'
-          />
-          <Button
-            className='text-black'
-            icon={<InstagramOutlined />}
-            href='https://www.instagram.com/samiur_rahman_mukul'
-            target='_blank'
-            shape='circle'
-            type='dashed'
-            size='middle'
-          />
-          <Button
-            className='text-black'
-            icon={<TwitterOutlined />}
-            href='https://www.twitter.com/SamiurRahMukul'
-            target='_blank'
-            shape='circle'
-            type='dashed'
-            size='middle'
-          />
-          <Button
-            className='text-black'
-            icon={<LinkedinOutlined />}
-            href='https://www.linkedin.com/in/SamiurRahmanMukul'
-            target='_blank'
-            shape='circle'
-            type='dashed'
-            size='middle'
-          />
-          <Button
-            className='text-black'
-            icon={<GithubOutlined />}
-            href='https://www.github.com/SamiurRahmanMukul'
-            target='_blank'
-            shape='circle'
-            type='dashed'
-            size='middle'
-          />
-        </div>
-      </Footer>
-    </Layout>
+        <Link to='/start/intermediate'>
+          <Card
+            hoverable
+            className='my-5 lg:my-0'
+            style={{ width: 220, height: 320 }}
+            cover={<img alt='example' src='https://minesweeper.online/img/homepage/intermediate.png' />}
+          >
+            <Meta title='Intermediate' />
+          </Card>
+        </Link>
+
+        <Link to='/start/expert'>
+          <Card
+            hoverable
+            style={{ width: 440, height: 350 }}
+            cover={<img alt='example' src='https://minesweeper.online/img/homepage/expert.png' />}
+          >
+            <Meta title='Expert' />
+          </Card>
+        </Link>
+      </div>
+    </MainLayout>
   );
 }
 

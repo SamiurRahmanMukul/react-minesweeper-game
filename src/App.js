@@ -1,4 +1,5 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import GamePanel from './pages/GamePanel';
 import Home from './pages/Home';
 import NotFound from './pages/NotFound';
 
@@ -11,6 +12,9 @@ function App() {
 
         {/* 404 (NOT FOUND) ROUTE */}
         <Route path='*' element={<NotFound />} />
+
+        {/* GAME PANEL ROUTE */}
+        <Route path='/start/:stage' element={<GamePanel />} />
       </Routes>
     </BrowserRouter>
   );
