@@ -26,9 +26,7 @@ function Button({
 
   return (
     <div
-      className={`Button value-${value} ${state === 1 ? 'visible' : ''} ${
-        red ? 'red' : ''
-      }`}
+      className={`Button value-${value} ${state === 1 ? 'visible' : ''} ${red ? 'red' : ''}`}
       onClick={onClick(row, col)}
       onContextMenu={onContext(row, col)}
     >

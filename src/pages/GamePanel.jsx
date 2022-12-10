@@ -12,8 +12,8 @@ function GamePanel() {
         {`Let's play - ${level}`}
       </h1>
 
-      <div className='w-[450px] mx-auto'>
-        <Game />
+      <div className='w-fit mx-auto mb-8'>
+        <Game level={level} />
       </div>
     </MainLayout>
   );

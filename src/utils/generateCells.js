@@ -1,11 +1,13 @@
-/* eslint-disable no-continue */
 /* eslint-disable no-plusplus */
-const generateCells = () => {
+/* eslint-disable no-continue */
+import { gameLevel } from '../constants/gameLevel';
+
+const generateCells = (level) => {
   // creating the cells;
   const cells = [];
-  for (let row = 0; row < 9; row++) {
+  for (let row = 0; row < gameLevel(level).width; row++) {
     cells.push([]);
-    for (let col = 0; col < 9; col++) {
+    for (let col = 0; col < gameLevel(level).height; col++) {
       // 0 = unpressed, 1 = visible, 2 = flag
       cells[row].push({ bomb: false, state: 0 });
     }
@@ -63,6 +65,7 @@ const generateCells = () => {
       cell.value = counter;
     }
   }
+
   return cells;
 };
 

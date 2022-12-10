@@ -54,7 +54,7 @@
   border-left-color: #7b7b7b;
   border-right-color: white;
   border-bottom-color: white;
-  display: grid;
-  grid-template-rows: repeat(9, 1fr);
-  grid-template-columns: repeat(9, 1fr);
+  /* display: grid; */
+  /* grid-template-rows: repeat(9, 1fr); */
+  /* grid-template-columns: repeat(9, 1fr); */
 }

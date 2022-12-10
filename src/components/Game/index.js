@@ -1,18 +1,20 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-shadow */
 /* eslint-disable consistent-return */
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import React, { useEffect, useState } from 'react';
+import { gameLevel } from '../../constants/gameLevel';
 import generateCells from '../../utils/generateCells';
 import setCellProp from '../../utils/setCellProp';
 import Button from '../Button';
 import NumberDisplay from '../NumberDisplay';
 import './Game.css';
 
-function Game() {
-  const [cells, setCells] = useState(generateCells());
-  const [mineCounter, setMineCounter] = useState(10);
+function Game({ level }) {
+  const [cells, setCells] = useState(generateCells(level));
+  const [mineCounter, setMineCounter] = useState(gameLevel(level).mines);
   const [time, setTime] = useState(0);
   const [face, setFace] = useState('😁');
   const [isLive, setIsLive] = useState(false);
@@ -57,12 +59,7 @@ function Game() {
 
   useEffect(() => {
     if (hasWon) {
-      const newCells = cells.map((row) => row.map((cell) => (cell.value === -1 ?
-        {
-          ...cell,
-          state: 1
-        } :
-        cell)));
+      const newCells = cells.map((row) => row.map((cell) => (cell.value === -1 ? { ...cell, state: 1 } : cell)));
       setCells(newCells);
       setFace('😎');
     }
@@ -96,20 +93,18 @@ function Game() {
   const handleButtonClick = (rowParam, colParam) => (e) => {
     e.preventDefault();
 
-    if (hasWon || hasLost) {
-      return;
-    }
+    if (hasWon || hasLost) { return; }
 
     let gameCells = cells;
     let cell = gameCells[rowParam][colParam];
 
     if (!isLive) {
-      // if the click place has a bomb, reshuffle the board
+      // if the click place has a bomb, re-shuffle the board
       if (cell.value === -1) {
         let hasABomb = true;
         let newCells = gameCells;
         while (hasABomb) {
-          newCells = generateCells();
+          newCells = generateCells(level);
           const newCell = newCells[rowParam][colParam];
           if (newCell.value !== -1) {
             hasABomb = false;
@@ -118,14 +113,11 @@ function Game() {
         gameCells = newCells;
         cell = gameCells[rowParam][colParam];
       }
-
       setIsLive(true);
     }
 
     // only do something if state is zero
-    if (cell.state !== 0) {
-      return;
-    }
+    if (cell.state !== 0) { return; }
 
     // if bomb, game over.
     if (cell.value === -1) {
@@ -137,9 +129,9 @@ function Game() {
     }
 
     // if nothing, spread
-    if (cell.value === 0) {
-      gameCells = openMultiple(gameCells, rowParam, colParam);
-    }
+    // if (cell.value === 0) {
+    //   gameCells = openMultiple(gameCells, rowParam, colParam);
+    // }
     // display number
     if (cell.value > 0) {
       gameCells = setCellProp(gameCells, rowParam, colParam, 'state', 1);
@@ -186,7 +178,7 @@ function Game() {
       return;
     }
 
-    // if flagged, unflag it
+    // if flagged, un-flag it
     const newCells = setCellProp(cells, rowParam, colParam, 'state', 0);
     setCells(newCells);
     setMineCounter(mineCounter + 1);
@@ -195,9 +187,9 @@ function Game() {
   const handleFaceClick = (e) => {
     e.preventDefault();
     if (isLive) {
-      setCells(generateCells());
+      setCells(generateCells(level));
       setIsLive(false);
-      setMineCounter(10);
+      setMineCounter(gameLevel(level).mines);
       setTime(0);
       setHasLost(false);
       setHasWon(false);
@@ -323,7 +315,16 @@ function Game() {
         </div>
         <NumberDisplay value={time} />
       </div>
-      <div className='Body'>{renderRows()}</div>
+      <div
+        className='Body'
+        style={{
+          display: 'grid',
+          gridTemplateRows: `repeat(${gameLevel(level).width}, 1fr)`,
+          gridTemplateColumns: `repeat(${gameLevel(level).height}, 1fr)`
+        }}
+      >
+        {renderRows()}
+      </div>
     </div>
   );
 }
