@@ -23,10 +23,13 @@ export const busSitSlice = createSlice({
         ...state,
         sits: newArray2
       };
+    },
+    resetSit: (state) => {
+      state.sits = sit;
     }
   }
 });
 
-export const { updateSit } = busSitSlice.actions;
+export const { updateSit, resetSit } = busSitSlice.actions;
 
 export default busSitSlice.reducer;
