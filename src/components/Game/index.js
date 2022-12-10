@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable no-shadow */
 /* eslint-disable consistent-return */
 /* eslint-disable react/no-array-index-key */
@@ -129,9 +128,9 @@ function Game({ level }) {
     }
 
     // if nothing, spread
-    // if (cell.value === 0) {
-    //   gameCells = openMultiple(gameCells, rowParam, colParam);
-    // }
+    if (cell.value === 0) {
+      gameCells = openMultiple(gameCells, rowParam, colParam);
+    }
     // display number
     if (cell.value > 0) {
       gameCells = setCellProp(gameCells, rowParam, colParam, 'state', 1);

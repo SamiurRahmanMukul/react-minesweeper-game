@@ -16,6 +16,12 @@ function MainLayout({ children }) {
         <Link to='/'>
           <Title className='!text-white mt-2' level={2}>Minesweeper</Title>
         </Link>
+
+        <Link to='/leader-board'>
+          <Button className='!text-white hover:!text-blue-400' type='default'>
+            Leader Board
+          </Button>
+        </Link>
       </Header>
 
       {/* main content section */}
