@@ -14,7 +14,7 @@ function LeaderBoard() {
 
   const handleFilter = (e) => {
     const { value } = e.target;
-    setFilterSit(sits.filter((item) => item.name.toLowerCase().includes(value.toLowerCase())));
+    setFilterSit(sits.filter((item) => item.name.toLowerCase().includes(value.toLowerCase()) || item.sitNum.toLowerCase().includes(value.toLowerCase())));
   };
 
   return (
@@ -25,6 +25,7 @@ function LeaderBoard() {
           placeholder='Type here to search by name'
           prefix={<SearchOutlined />}
           onChange={handleFilter}
+          allowClear
         />
         <Button
           size='large'

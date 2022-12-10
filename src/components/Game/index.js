@@ -3,8 +3,12 @@
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
+import { UserOutlined } from '@ant-design/icons';
+import { Input, message, Modal } from 'antd';
 import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { gameLevel } from '../../constants/gameLevel';
+import { updateSit } from '../../redux/slice/busSiteSlice';
 import generateCells from '../../utils/generateCells';
 import setCellProp from '../../utils/setCellProp';
 import Button from '../Button';
@@ -12,6 +16,10 @@ import NumberDisplay from '../NumberDisplay';
 import './Game.css';
 
 function Game({ level }) {
+  const sits = useSelector((state) => state.busSit.sits);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [nickName, setNickName] = useState('');
+  const [sitNumber, setSitNumber] = useState(null);
   const [cells, setCells] = useState(generateCells(level));
   const [mineCounter, setMineCounter] = useState(gameLevel(level).mines);
   const [time, setTime] = useState(0);
@@ -19,6 +27,7 @@ function Game({ level }) {
   const [isLive, setIsLive] = useState(false);
   const [hasWon, setHasWon] = useState(false);
   const [hasLost, setHasLost] = useState(false);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (isLive && !hasWon && !hasLost) {
@@ -124,6 +133,9 @@ function Game({ level }) {
       let newCells = setCellProp(gameCells, rowParam, colParam, 'red', true);
       newCells = openAllBombs(newCells);
       setCells(newCells);
+
+      // called sit booking functionality
+      handelLeaderBoard();
       return;
     }
 
@@ -303,28 +315,85 @@ function Game({ level }) {
     return newCells;
   };
 
+  // function to handle leader board
+  const handelLeaderBoard = () => {
+    const random = Math.floor((Math.random() * 41) + 1);
+    if (sits[random].name === '' && sits[random].booking === 'No') {
+      setSitNumber(random);
+      setIsModalOpen(true);
+    } else {
+      message.error('Ops! This already booked. Please try again', 1000);
+    }
+  };
+
+  // function handle bus sit booking confirm
+  const handleBookingConfirm = () => {
+    if (nickName === '') {
+      message.error('Please insert your nick name first and try to again. Thanks', 1000);
+    } else {
+      dispatch(updateSit({ index: sitNumber - 1, name: nickName }));
+
+      if (isLive) {
+        setCells(generateCells(level));
+        setIsLive(false);
+        setMineCounter(gameLevel(level).mines);
+        setTime(0);
+        setHasLost(false);
+        setHasWon(false);
+        setFace('😁');
+      }
+
+      message.success(`Congrats! You (${sits[sitNumber - 1].sitNum}) sit booked successful`, 1000);
+      setIsModalOpen(false);
+      setNickName('');
+      setSitNumber(0);
+    }
+  };
+
   return (
-    <div className='App'>
-      <div className='Header'>
-        <NumberDisplay value={mineCounter} />
-        <div className='Face' onClick={handleFaceClick}>
-          <span role='img' aria-label='smiley'>
-            {face}
-          </span>
+    <>
+      <div className='App'>
+        <div className='Header'>
+          <NumberDisplay value={mineCounter} />
+          <div className='Face' onClick={handleFaceClick}>
+            <span role='img' aria-label='smiley'>
+              {face}
+            </span>
+          </div>
+          <NumberDisplay value={time} />
         </div>
-        <NumberDisplay value={time} />
+        <div
+          className='Body'
+          style={{
+            display: 'grid',
+            gridTemplateRows: `repeat(${gameLevel(level).width}, 1fr)`,
+            gridTemplateColumns: `repeat(${gameLevel(level).height}, 1fr)`
+          }}
+        >
+          {renderRows()}
+        </div>
       </div>
-      <div
-        className='Body'
-        style={{
-          display: 'grid',
-          gridTemplateRows: `repeat(${gameLevel(level).width}, 1fr)`,
-          gridTemplateColumns: `repeat(${gameLevel(level).height}, 1fr)`
+
+      <Modal
+        title='Booking confirmation'
+        open={isModalOpen}
+        onCancel={() => {
+          setIsModalOpen(false);
+          setNickName('');
+          setSitNumber(0);
         }}
+        onOk={handleBookingConfirm}
+        closable={false}
       >
-        {renderRows()}
-      </div>
-    </div>
+        <Input
+          size='large'
+          placeholder='Enter here your nick name'
+          onChange={(e) => setNickName(e.target.value)}
+          prefix={<UserOutlined />}
+          value={nickName}
+        />
+      </Modal>
+    </>
   );
 }
 

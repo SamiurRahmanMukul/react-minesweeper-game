@@ -1,9 +1,51 @@
+/* Tailwind CSS */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Roboto', sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+html {
+  scroll-behavior: smooth;
 }
+
+body {
+  font-family: 'Roboto', sans-serif;
+}
+
+input,
+select,
+button,
+textarea,
+a {
+  border-radius: 0;
+  -webkit-appearance: none;
+}
+
+/* And Design Customize Start */
+
+.ant-btn-primary {
+  @apply text-white bg-blue-600 border-blue-600 hover:!text-black hover:bg-blue-800 hover:border-blue-800 disabled:text-gray-200 disabled:bg-blue-400 disabled:border-blue-400;
+}
+
+.ant-divider-horizontal.ant-divider-with-text-center::before,
+.ant-divider-horizontal.ant-divider-with-text-center::after {
+  border-top: 2px solid !important;
+  @apply border-blue-600 text-center;
+}
+
+.ant-message-custom-content {
+  @apply inline-flex items-center;
+}
+
+.ant-popover-title {
+  @apply bg-black;
+}
+
+.ant-image-preview-img-wrapper img {
+  display: inline !important;
+}
+
+.ant-image-preview-img {
+  margin: auto !important;
+}
+
+/* And Design Customize End */
