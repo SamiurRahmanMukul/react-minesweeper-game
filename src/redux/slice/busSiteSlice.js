@@ -1,4 +1,4 @@
-import { createSlice, current } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import sit from '../../data/bus-sit.json';
 
 export const busSitSlice = createSlice({
@@ -8,21 +8,9 @@ export const busSitSlice = createSlice({
   },
   reducers: {
     updateSit: (state, actions) => {
-      const newArray = current(state.sits);
-      let currentSit = newArray[actions.payload.index];
-      currentSit = { ...currentSit, name: actions.payload.name, booking: 'Yes' };
-
-      const newArray2 = newArray.map((value, index) => {
-        if (index === actions.payload.index) {
-          return currentSit;
-        }
-        return value;
-      });
-
-      return {
-        ...state,
-        sits: newArray2
-      };
+      const currentSit = state.sits[actions.payload.index];
+      currentSit.name = actions.payload.name;
+      currentSit.booking = 'Yes';
     },
     resetSit: (state) => {
       state.sits = sit;

@@ -38,6 +38,5 @@
   { "index": 37, "sitNum": "R-I-1", "color": "#34A23F", "booking": "No", "name": "" },
   { "index": 38, "sitNum": "R-I-2", "color": "#34A22F", "booking": "No", "name": "" },
   { "index": 39, "sitNum": "R-J-1", "color": "#34A21F", "booking": "No", "name": "" },
-  { "index": 40, "sitNum": "R-J-2", "color": "#34A20F", "booking": "No", "name": "" },
-  { "index": 41, "sitNum": "C-J-3", "color": "#34A200", "booking": "No", "name": "" }
+  { "index": 40, "sitNum": "R-J-2", "color": "#34A20F", "booking": "No", "name": "" }
 ]

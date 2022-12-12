@@ -11,6 +11,7 @@ import { gameLevel } from '../../constants/gameLevel';
 import { updateSit } from '../../redux/slice/busSiteSlice';
 import generateCells from '../../utils/generateCells';
 import setCellProp from '../../utils/setCellProp';
+import { userExists } from '../../utils/userExist';
 import Button from '../Button';
 import NumberDisplay from '../NumberDisplay';
 import './Game.css';
@@ -322,14 +323,26 @@ function Game({ level }) {
       setSitNumber(random);
       setIsModalOpen(true);
     } else {
-      message.error('Ops! This already booked. Please try again', 1000);
+      message.error('Ops! This already booked. Please try again');
+
+      if (isLive) {
+        setCells(generateCells(level));
+        setIsLive(false);
+        setMineCounter(gameLevel(level).mines);
+        setTime(0);
+        setHasLost(false);
+        setHasWon(false);
+        setFace('😁');
+      }
     }
   };
 
   // function handle bus sit booking confirm
   const handleBookingConfirm = () => {
     if (nickName === '') {
-      message.error('Please insert your nick name first and try to again. Thanks', 1000);
+      message.error('Please insert your nick name first and try to again. Thanks');
+    } else if (userExists(sits, nickName)) {
+      message.error('Sorry! This nickname already exists');
     } else {
       dispatch(updateSit({ index: sitNumber - 1, name: nickName }));
 
@@ -343,7 +356,7 @@ function Game({ level }) {
         setFace('😁');
       }
 
-      message.success(`Congrats! You (${sits[sitNumber - 1].sitNum}) sit booked successful`, 1000);
+      message.success(`Congrats! You (${sits[sitNumber - 1].sitNum}) sit booked successful`);
       setIsModalOpen(false);
       setNickName('');
       setSitNumber(0);

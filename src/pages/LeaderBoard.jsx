@@ -14,7 +14,7 @@ function LeaderBoard() {
 
   const handleFilter = (e) => {
     const { value } = e.target;
-    setFilterSit(sits.filter((item) => item.name.toLowerCase().includes(value.toLowerCase()) || item.sitNum.toLowerCase().includes(value.toLowerCase())));
+    setFilterSit(sits.filter((item) => item.name.toLowerCase().includes(value.toLowerCase()) || item.sitNum.toLowerCase().includes(value.toLowerCase()) || item.booking.toLowerCase().includes(value.toLowerCase())));
   };
 
   return (
@@ -30,7 +30,10 @@ function LeaderBoard() {
         <Button
           size='large'
           type='default'
-          onClick={() => dispatch(resetSit())}
+          onClick={() => {
+            dispatch(resetSit());
+            window.location.reload();
+          }}
         >
           Reset Board
         </Button>
